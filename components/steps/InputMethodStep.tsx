@@ -75,13 +75,13 @@ export function InputMethodStep({
         </div>
 
         <div className="flex items-center justify-center space-x-4 mt-6">
-          <Button
+          {/* <Button
             onClick={() => onSelectMethod("text")}
             variant="default"
             className="flex-1 sm:flex-initial"
           >
             Continue →
-          </Button>
+          </Button> */}
         </div>
       </div>
     </motion.div>

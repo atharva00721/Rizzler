@@ -23,6 +23,7 @@ import {
   type InputMethod,
   type ConversationStage,
 } from "@/types";
+import { generateSuggestionPrompt } from "../utils/prompts";
 
 export default function Home() {
   // States for entire flow
@@ -178,6 +179,31 @@ export default function Home() {
       </div>
     </div>
   );
+
+  const [stage, setStage] = useState("just_met");
+  const [vibe, setVibe] = useState("flirty");
+  const [suggestions, setSuggestions] = useState("");
+
+  const stages = [
+    "just_met",
+    "crush",
+    "acquaintance",
+    "friends",
+    "close_friends",
+    "best_friends",
+    "dating",
+    "long_term_relationship",
+    "its_complicated",
+  ];
+
+  const vibes = ["flirty", "simp", "freaky", "witty", "sweet", "toxic"];
+
+  const handleGenerate = async () => {
+    const prompt = generateSuggestionPrompt(stage, vibe);
+    // Here you would typically make an API call to your AI service
+    // For now, just displaying the prompt
+    setSuggestions(prompt);
+  };
 
   return (
     <div className="h-screen w-screen bg-gradient-to-br from-background to-muted overflow-hidden">
@@ -414,6 +440,57 @@ export default function Home() {
       />
 
       {showBackConfirmation && <BackConfirmationDialog />}
+
+      <main className="min-h-screen p-8">
+        <div className="max-w-2xl mx-auto space-y-8">
+          <h1 className="text-4xl font-bold text-center">Rizz Generator</h1>
+          
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Stage</label>
+              <select
+                value={stage}
+                onChange={(e) => setStage(e.target.value)}
+                className="w-full p-2 border rounded"
+              >
+                {stages.map((s) => (
+                  <option key={s} value={s}>
+                    {s.replace(/_/g, " ").toLowerCase()}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Vibe</label>
+              <select
+                value={vibe}
+                onChange={(e) => setVibe(e.target.value)}
+                className="w-full p-2 border rounded"
+              >
+                {vibes.map((v) => (
+                  <option key={v} value={v}>
+                    {v}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <button
+              onClick={handleGenerate}
+              className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+            >
+              Generate Suggestions
+            </button>
+          </div>
+
+          {suggestions && (
+            <div className="mt-8 p-4 border rounded bg-gray-50">
+              <pre className="whitespace-pre-wrap">{suggestions}</pre>
+            </div>
+          )}
+        </div>
+      </main>
     </div>
   );
 }

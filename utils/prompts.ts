@@ -1,4 +1,25 @@
-export function generateSuggestionPrompt(stage: string, vibe: string = "flirty"): string {
+import { getVibeExamplesForStages } from "../data/examples";
+
+export function getExamplesForStageAndVibe(
+  stage: string,
+  vibe: string
+): string {
+  const examples = getVibeExamplesForStages();
+  const stageExamples = examples[stage as keyof typeof examples];
+  if (!stageExamples) return "";
+
+  const vibeExamples = stageExamples[vibe as keyof typeof stageExamples];
+  if (!vibeExamples) return "";
+
+  return Object.values(vibeExamples).join(",\n\n");
+}
+
+export function generateSuggestionPrompt(
+  stage: string,
+  vibe: string = "flirty"
+): string {
+  const examples = getExamplesForStageAndVibe(stage, vibe);
+
   return `
 Generate 3 to 4 messaging suggestions with a "${vibe}" vibe that are effortlessly smooth, confident, and playfully flirty. The conversation is currently at the "${stage}" stage.
 
@@ -18,6 +39,9 @@ Stage-Specific Guidance:
 - **Dating/Long-Term Relationship**: Intimate, supportive, and warm, with flirtation and sincere connection.
 - **It's Complicated**: Balance boldness with uncertainty, reflecting mixed emotions.
 
+
+#EXAMPLES:
+${examples}
 Response Requirements:
 - Each suggestion should feel natural and engaging—avoid forced pickup lines or try-hard energy.
 - The response should balance charm, wit, and intrigue, fitting organically into the conversation.
@@ -37,3 +61,5 @@ Return a plain JSON object with a single key "responses" mapping to an array of 
 Ensure the output is plain JSON with no markdown, code fences, or additional text. Adjust the tone and style based on the conversation stage and chosen vibe to produce responses that feel both natural and effective.
   `;
 }
+
+console.log(getExamplesForStageAndVibe("just_met", "flirty"));

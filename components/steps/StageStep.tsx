@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { relationshipStages } from "@/data/stages";
 import { type ConversationStage } from "@/types";
-import { ArrowLeft, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 
 interface StageStepProps {
   selectedStage: ConversationStage;
