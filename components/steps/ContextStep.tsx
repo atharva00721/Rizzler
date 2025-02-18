@@ -40,20 +40,13 @@ export function ContextStep({
       exit={{ opacity: 0, y: -20 }}
     >
       {/* Back Button - Mobile Optimized */}
-      <button
-        onClick={onBack}
-        className="flex items-center text-muted-foreground hover:text-foreground transition-colors -ml-2"
-      >
-        <ArrowLeft className="w-5 h-5 mr-1" />
-        <span>Back</span>
-      </button>
 
       <h1 className="text-2xl sm:text-3xl font-bold text-foreground text-center mb-8">
-        What's your goal?
+        What&apos;s your goal?
       </h1>
 
       {/* Context Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {contexts.map((ctx) => (
           <motion.div
             key={ctx.id}
@@ -65,7 +58,7 @@ export function ContextStep({
             }}
             className={`
               relative overflow-hidden group
-              p-4 rounded-xl cursor-pointer
+              p-3 rounded-xl cursor-pointer
               border transition-all duration-200
               ${
                 selectedContext === ctx.label && !isCustomContext
@@ -75,14 +68,29 @@ export function ContextStep({
             `}
           >
             <div className="flex items-start space-x-3">
-              <span className="text-2xl">{ctx.emoji}</span>
-              <div className="flex-1">
-                <h3 className="font-medium text-foreground">{ctx.label}</h3>
-                <p className="text-sm text-muted-foreground mt-1">
+              <span className="text-xl">{ctx.emoji}</span>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-medium text-foreground text-sm">
+                  {ctx.label}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
                   {ctx.description}
                 </p>
+                <div className="mt-1">
+                  <span
+                    className={`
+                    text-xs px-2 py-0.5 rounded-full
+                    ${ctx.vibe === "flirty" ? "bg-pink-100 text-pink-700" : ""}
+                    ${
+                      ctx.vibe === "simp" ? "bg-purple-100 text-purple-700" : ""
+                    }
+                    ${ctx.vibe === "freaky" ? "bg-red-100 text-red-700" : ""}
+                  `}
+                  >
+                    {ctx.vibe}
+                  </span>
+                </div>
               </div>
-              <ChevronRight className="w-5 h-5 text-muted-foreground/50 group-hover:text-primary transition-colors" />
             </div>
           </motion.div>
         ))}
@@ -91,9 +99,9 @@ export function ContextStep({
         <motion.div
           whileTap={{ scale: 0.98 }}
           className={`
-            col-span-1 sm:col-span-2
+            col-span-1 md:col-span-3
             relative overflow-hidden
-            p-4 rounded-xl cursor-pointer
+            p-3 rounded-xl cursor-pointer
             border transition-all duration-200
             ${
               isCustomContext
@@ -155,6 +163,15 @@ export function ContextStep({
             </motion.div>
           )}
         </motion.div>
+      </div>
+      <div className="flex justify-between space-x-4">
+        <Button
+          onClick={onBack}
+          variant="outline"
+          className="flex-1 sm:flex-initial"
+        >
+          Back
+        </Button>
       </div>
     </motion.div>
   );

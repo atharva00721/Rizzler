@@ -1,6 +1,6 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { predefinedContexts } from "@/data/contexts";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { InputMethodStep } from "@/components/steps/InputMethodStep";
@@ -56,18 +56,6 @@ export default function Home() {
     align: "center",
     containScroll: "trimSnaps",
   });
-
-  // Predefined contexts
-  const contexts: Context[] = [
-    {
-      id: 1,
-      label: "First Move",
-      description: "Nail that opener",
-      emoji: "👋",
-    },
-    { id: 2, label: "Mid-Game", description: "Keep it flowing", emoji: "💬" },
-    { id: 3, label: "End Game", description: "Bring it home", emoji: "🎯" },
-  ];
 
   // Handle file input on step 1
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -280,7 +268,7 @@ export default function Home() {
             className="relative h-full flex flex-col items-center justify-center px-4"
           >
             <ContextStep
-              contexts={contexts}
+              contexts={predefinedContexts}
               selectedContext={selectedContext}
               onSelect={(context) => {
                 setSelectedContext(context);

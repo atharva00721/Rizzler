@@ -2,7 +2,6 @@
 import { motion } from "framer-motion";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -78,13 +77,7 @@ export function InputMethodStep({
         </div>
 
         <div className="flex items-center justify-center space-x-4 mt-6">
-          {/* <Button
-            onClick={onBack}
-            variant="outline"
-            className="flex-1 sm:flex-initial"
-          >
-            Back
-          </Button> */}
+          
           <Button
             onClick={() => onSelectMethod("text")}
             variant="default"

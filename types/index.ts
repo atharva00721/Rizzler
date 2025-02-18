@@ -2,6 +2,8 @@ export type InputMethod = "text" | "image";
 
 export type ConversationStage = "early" | "mid" | "closing";
 
+export type Vibe = "flirty" | "simp" | "freaky";
+
 export interface Response {
   id: number;
   message: string;
@@ -15,4 +17,5 @@ export interface Context {
   label: string;
   description: string;
   emoji: string;
+  vibe: Vibe;
 }

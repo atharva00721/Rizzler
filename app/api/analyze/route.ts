@@ -46,7 +46,14 @@ Additional context: ${context}`;
 
     // Updated prompt with rizzed and slightly freaky tone and preset structure.
     const suggestionPrompt = `
-   Generate 3 to 4 messaging suggestions that are effortlessly smooth, confident, and playfully flirty. The conversation is currently at the "${stage}" stage.  
+   Generate 3 to 4 messaging suggestions with a "${formData.get(
+     "vibe"
+   )}" vibe that are effortlessly smooth, confident, and playfully flirty. The conversation is currently at the "${stage}" stage.  
+
+   Adjust the tone based on the vibe:
+   - flirty: Charming, playful, and subtly romantic
+   - simp: Admiring, complimentary, and slightly vulnerable
+   - freaky: Bold, suggestive, and mysteriously alluring
 
 Each response should:  
 - Feel natural and engaging—no forced pickup lines or try-hard energy.  
@@ -86,6 +93,7 @@ Ensure the output is plain JSON with no markdown, code fences, or extra text. Ad
     try {
       parsedSuggestions = JSON.parse(responseText);
     } catch (err) {
+      console.log("Failed to parse JSON:", err);
       // Remove any backslashes not followed by valid escape characters.
       responseText = responseText.replace(/\$?!["\\/bfnrtu]\)/g, "");
       parsedSuggestions = JSON.parse(responseText);
