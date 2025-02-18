@@ -1,6 +1,16 @@
 //
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
+import { Response } from "@/types";
+
+interface ApiResponse {
+  responses: {
+    message: string;
+    rating: number;
+    explanation: string;
+    alternative: string;
+  }[];
+}
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
@@ -89,7 +99,7 @@ Ensure the output is plain JSON with no markdown, code fences, or extra text. Ad
     console.log("Flash-2.0 API response:", responseText);
 
     // Attempt to parse the JSON output. If JSON.parse fails, clean illegal escape characters.
-    let parsedSuggestions;
+    let parsedSuggestions: ApiResponse;
     try {
       parsedSuggestions = JSON.parse(responseText);
     } catch (err) {
@@ -105,13 +115,13 @@ Ensure the output is plain JSON with no markdown, code fences, or extra text. Ad
       ? parsedSuggestions.responses
       : [];
 
-    const transformedSuggestions = suggestionsArray.map(
-      (s: any, index: number) => ({
+    const transformedSuggestions: Response[] = suggestionsArray.map(
+      (suggestion, index) => ({
         id: index + 1,
-        message: s.message,
-        rating: s.rating,
-        explanation: s.explanation,
-        alternative: s.alternative,
+        message: suggestion.message,
+        rating: suggestion.rating,
+        explanation: suggestion.explanation,
+        alternative: suggestion.alternative,
       })
     );
 

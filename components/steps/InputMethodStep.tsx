@@ -11,13 +11,11 @@ import { Button } from "@/components/ui/button";
 interface InputMethodStepProps {
   onSelectMethod: (method: "text" | "image") => void;
   onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBack: () => void; // Add this prop
 }
 
 export function InputMethodStep({
   onSelectMethod,
   onFileSelect,
-  onBack,
 }: InputMethodStepProps) {
   const cardHeight = "h-[150px] sm:h-[200px]";
   return (
@@ -77,7 +75,6 @@ export function InputMethodStep({
         </div>
 
         <div className="flex items-center justify-center space-x-4 mt-6">
-          
           <Button
             onClick={() => onSelectMethod("text")}
             variant="default"
