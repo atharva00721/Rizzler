@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 interface InputMethodStepProps {
   onSelectMethod: (method: "text" | "image") => void;
   onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void;
-r}
+}
 
 export function InputMethodStep({
   onSelectMethod,
