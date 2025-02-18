@@ -18,9 +18,9 @@ interface InputMethodStepProps {
 export function InputMethodStep({
   onSelectMethod,
   onFileSelect,
-  onBack, 
+  onBack,
 }: InputMethodStepProps) {
-  const cardHeight = "h-[200px]";
+  const cardHeight = "h-[150px] sm:h-[200px]";
   return (
     <motion.div
       key="step1"
@@ -29,21 +29,23 @@ export function InputMethodStep({
       exit={{ opacity: 0, y: -20 }}
       className="h-full flex flex-col items-center justify-center px-4"
     >
-      <div className="max-w-xl w-full text-center space-y-6">
-        <h1 className="text-3xl font-bold text-foreground">
+      <div className="max-w-xl w-full text-center space-y-4 sm:space-y-6">
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground px-4">
           How would you like to share your conversation?
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 px-4">
           {/* Text Option */}
           <Card
             className={`${cardHeight} hover:bg-muted cursor-pointer`}
             onClick={() => onSelectMethod("text")}
           >
-            <CardHeader>
-              <CardTitle className="text-4xl mb-4 block">💬</CardTitle>
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-3xl sm:text-4xl mb-2 sm:mb-4">
+                💬
+              </CardTitle>
               <CardDescription>
-                <h3 className="text-xl font-semibold">Text Input</h3>
-                <p className="text-muted-foreground mt-2">
+                <h3 className="text-lg sm:text-xl font-semibold">Text Input</h3>
+                <p className="text-sm sm:text-base text-muted-foreground mt-1 sm:mt-2">
                   Type or paste your conversation
                 </p>
               </CardDescription>

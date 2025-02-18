@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
-
 import { InputMethodStep } from "@/components/steps/InputMethodStep";
 import { TextInputStep } from "@/components/steps/TextInputStep";
 import { ResponseCard } from "@/components/response/ResponseCard";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
+import { ContextStep } from "@/components/steps/ContextStep";
 
 import {
   type Response,
@@ -173,27 +173,27 @@ export default function Home() {
   };
 
   // Reusable Back Button component
-  const BackButton = () => (
-    <Button
-      onClick={handleBackWithConfirmation}
-      variant="ghost"
-      className="absolute top-4 left-4 flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-      >
-        <path
-          fillRule="evenodd"
-          d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-          clipRule="evenodd"
-        />
-      </svg>
-      <span>Back</span>
-    </Button>
-  );
+  // const BackButton = () => (
+  //   <Button
+  //     onClick={handleBackWithConfirmation}
+  //     variant="ghost"
+  //     className="absolute top-4 left-4 flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+  //   >
+  //     <svg
+  //       xmlns="http://www.w3.org/2000/svg"
+  //       className="h-5 w-5"
+  //       viewBox="0 0 20 20"
+  //       fill="currentColor"
+  //     >
+  //       <path
+  //         fillRule="evenodd"
+  //         d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+  //         clipRule="evenodd"
+  //       />
+  //     </svg>
+  //     <span>Back</span>
+  //   </Button>
+  // );
 
   // Confirmation Dialog for going back
   const BackConfirmationDialog = () => (
@@ -279,112 +279,16 @@ export default function Home() {
             exit={{ opacity: 0, y: -20 }}
             className="relative h-full flex flex-col items-center justify-center px-4"
           >
-            <div className="max-w-md sm:max-w-lg md:max-w-xl w-full space-y-8 text-center">
-              <h1 className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
-                Choose a Context
-              </h1>
-              <div className="space-y-4">
-                {contexts.map((ctx) => (
-                  <div
-                    key={ctx.id}
-                    onClick={() => {
-                      setSelectedContext(ctx.label);
-                      setIsCustomContext(false);
-                      setTimeout(() => setCurrentStep(3), 500);
-                    }}
-                    className={`p-6 bg-card text-card-foreground rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer ${
-                      selectedContext === ctx.label && !isCustomContext
-                        ? "border-2 border-primary"
-                        : ""
-                    }`}
-                  >
-                    <span className="text-2xl mr-2">{ctx.emoji}</span>
-                    <h3 className="text-xl font-semibold">{ctx.label}</h3>
-                    <p className="text-muted-foreground mt-2">
-                      {ctx.description}
-                    </p>
-                  </div>
-                ))}
-
-                {/* Custom Context Option */}
-                <div className="relative">
-                  <div
-                    onClick={() => setIsCustomContext(true)}
-                    className={`p-6 bg-card text-card-foreground rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer ${
-                      isCustomContext ? "border-2 border-primary" : ""
-                    }`}
-                  >
-                    <span className="text-2xl mr-2">✨</span>
-                    <h3 className="text-xl font-semibold">Custom Context</h3>
-                    <p className="text-muted-foreground mt-2">
-                      Define your own specific situation
-                    </p>
-                  </div>
-
-                  {/* Custom Context Input */}
-                  {isCustomContext && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="mt-4"
-                    >
-                      <div className="bg-muted p-4 rounded-xl">
-                        <textarea
-                          value={customContext}
-                          onChange={(e) => setCustomContext(e.target.value)}
-                          placeholder="Describe your specific situation..."
-                          className="w-full p-3 rounded-lg border-2 border-input focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all bg-background"
-                          rows={3}
-                        />
-                        <div className="mt-4 flex justify-end space-x-3">
-                          <Button
-                            variant="ghost"
-                            onClick={() => {
-                              setIsCustomContext(false);
-                              setCustomContext("");
-                            }}
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            onClick={() => {
-                              if (customContext.trim()) {
-                                setSelectedContext(customContext.trim());
-                                setTimeout(() => setCurrentStep(3), 500);
-                              }
-                            }}
-                            disabled={!customContext.trim()}
-                            variant="default"
-                          >
-                            Save & Continue
-                          </Button>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </div>
-              </div>
-
-              {/* Navigation Button */}
-              <div className="flex justify-between space-x-4 mt-6">
-                <Button
-                  onClick={() => setCurrentStep(1)}
-                  variant="outline"
-                  className="flex-1 sm:flex-initial"
-                >
-                  Back
-                </Button>
-                <Button
-                  onClick={() => setCurrentStep(3)}
-                  variant="default"
-                  className="flex-1 sm:flex-initial"
-                  disabled={!selectedContext}
-                >
-                  Continue →
-                </Button>
-              </div>
-            </div>
+            <ContextStep
+              contexts={contexts}
+              selectedContext={selectedContext}
+              onSelect={(context) => {
+                setSelectedContext(context);
+                setIsCustomContext(false);
+              }}
+              onContinue={() => setCurrentStep(3)}
+              onBack={() => handleBackWithConfirmation()}
+            />
           </motion.div>
         )}
 
@@ -397,7 +301,7 @@ export default function Home() {
             exit={{ opacity: 0, y: -20 }}
             className="relative h-full flex flex-col items-center justify-center px-4"
           >
-            <BackButton />
+            {/* <BackButton /> */}
             <div className="max-w-md sm:max-w-lg md:max-w-xl w-full space-y-8 text-center">
               <h1 className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
                 Where are you in the conversation?
@@ -454,7 +358,7 @@ export default function Home() {
             exit={{ opacity: 0, y: -20 }}
             className="relative h-full flex flex-col items-center justify-center px-6"
           >
-            <BackButton />
+            {/* <BackButton /> */}
             <div className="max-w-md sm:max-w-lg md:max-w-xl w-full space-y-8 text-center">
               <h1 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
                 Ready to Rizz? ✨
@@ -524,10 +428,10 @@ export default function Home() {
             exit={{ opacity: 0, y: -20 }}
             className="relative min-h-screen flex flex-col bg-background pt-20 pb-4 px-4"
           >
-            <BackButton />
+            {/* <BackButton /> */}
             <div className="max-w-md md:max-w-4xl mx-auto w-full">
               <div className="text-center mb-8">
-                <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-primary-foreground text-transparent bg-clip-text">
+                <h1 className="text-3xl md:text-4xl font-bold text-foreground">
                   Your Responses 🎯
                 </h1>
               </div>
