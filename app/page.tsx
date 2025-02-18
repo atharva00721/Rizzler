@@ -34,6 +34,11 @@ import {
 //   );
 // }
 
+// Add custom error type
+type ApiError = {
+  message: string;
+};
+
 export default function Home() {
   // States for entire flow
   const [currentStep, setCurrentStep] = useState<number | string>(1);
@@ -63,7 +68,7 @@ export default function Home() {
     setTimeout(() => setCurrentStep(2), 500);
   };
 
-  // Generate responses API call
+  // Generate responses API call with improved error handling
   const handleGenerateResponses = async () => {
     if (!conversationStage || (!textInputValue && !imageInput)) {
       setError("Please complete all inputs before proceeding!");
@@ -91,15 +96,18 @@ export default function Home() {
         method: "POST",
         body: formData,
       });
+      
       if (!res.ok) {
-        const errMessage = await res.text();
-        throw new Error(errMessage || "Failed to fetch responses");
+        const errData = await res.json() as ApiError;
+        throw new Error(errData.message || "Failed to fetch responses");
       }
-      const data: Response[] = await res.json();
+      
+      const data = (await res.json()) as Response[];
       setResponses(data);
       setCurrentStep(5); // Move to results step.
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const error = err as Error;
+      setError(error.message);
     } finally {
       setLoading(false);
     }
