@@ -235,7 +235,6 @@ export default function Home() {
                   setCurrentStep(method === "text" ? 1.5 : 2);
                 }}
                 onFileSelect={handleFileInput}
-                onBack={handleBackWithConfirmation}
               />
             </div>
           </motion.div>
@@ -356,9 +355,6 @@ export default function Home() {
               </h1>
               <div className="bg-card text-card-foreground rounded-xl shadow-lg p-6 space-y-4">
                 {/* Display chosen input */}
-                <div className="space-y-2">
-                  <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-300">
-                    Your Input
                   </h2>
                   {inputMethod === "text" ? (
                     <p className="px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-md text-sm text-gray-600 dark:text-gray-300">
