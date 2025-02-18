@@ -54,7 +54,7 @@ export function StageStep({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          What's your relationship status?
+          What&apos;s your relationship status?
         </motion.h1>
         <motion.p
           className="text-muted-foreground"
