@@ -127,11 +127,10 @@ Ensure the output is plain JSON with no markdown, code fences, or extra text. Ad
 
     // Return an array of transformed suggestions.
     return NextResponse.json(transformedSuggestions);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Flash-2.0 API error:", error);
-    return NextResponse.json(
-      { error: "Failed to analyze conversation" },
-      { status: 500 }
-    );
+    const errorMessage =
+      error instanceof Error ? error.message : "Failed to analyze conversation";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
