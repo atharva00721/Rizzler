@@ -98,8 +98,8 @@ export default function Home() {
       const data: Response[] = await res.json();
       setResponses(data);
       setCurrentStep(5); // Move to results step.
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError((err as Error).message);
     } finally {
       setLoading(false);
     }
