@@ -1,4 +1,4 @@
-//
+"use server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
 import { Response } from "@/types";
@@ -16,9 +16,6 @@ const API_KEY = process.env.GEMINI_API_KEY || "";
 const MODEL_NAME = "gemini-2.0-flash";
 
 const genAI = new GoogleGenerativeAI(API_KEY);
-
-
-
 
 export async function POST(request: Request) {
   try {
@@ -40,7 +37,7 @@ export async function POST(request: Request) {
 
       // Use flash-2.0 exclusively for OCR extraction.
       const flashModel = genAI.getGenerativeModel({
-        model: "MODEL_NAME",
+        model: MODEL_NAME,
       });
       const ocrPrompt =
         "Extract and return only the text content from this conversation screenshot.";
@@ -92,7 +89,7 @@ Ensure the output is plain JSON with no markdown, code fences, or extra text. Ad
 
     // Use flash-2.0 exclusively for generating suggestions.
     const flashSuggestionModel = genAI.getGenerativeModel({
-      model: "MODEL_NAME",
+      model: MODEL_NAME,
     });
     const result = await flashSuggestionModel.generateContent([
       fullContext,
