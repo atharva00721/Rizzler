@@ -2,7 +2,13 @@
 import { predefinedContexts } from "@/data/contexts";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import useEmblaCarousel from "embla-carousel-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { InputMethodStep } from "@/components/steps/InputMethodStep";
 import { TextInputStep } from "@/components/steps/TextInputStep";
 import { ResponseCard } from "@/components/response/ResponseCard";
@@ -10,29 +16,11 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import { ContextStep } from "@/components/steps/ContextStep";
-
 import {
   type Response,
   type InputMethod,
   type ConversationStage,
 } from "@/types";
-
-// Reusable TextInput (if needed by TextInputStep)
-// interface TextInputProps {
-//   value: string;
-//   onChange: (val: string) => void;
-//   placeholder?: string;
-// }
-// function TextInput({ value, onChange, placeholder }: TextInputProps) {
-//   return (
-//     <textarea
-//       value={value}
-//       onChange={(e) => onChange(e.target.value)}
-//       placeholder={placeholder}
-//       className="w-full h-48 p-4 rounded-xl border-2 border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all"
-//     />
-//   );
-// }
 
 export default function Home() {
   // States for entire flow
@@ -49,12 +37,6 @@ export default function Home() {
   const [customContext, setCustomContext] = useState("");
   const [isCustomContext, setIsCustomContext] = useState(false);
   const [showBackConfirmation, setShowBackConfirmation] = useState(false);
-
-  // Carousel for responses
-  const [carouselRef] = useEmblaCarousel({
-    align: "center",
-    containScroll: "trimSnaps",
-  });
 
   // Handle file input on step 1
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,31 +140,6 @@ export default function Home() {
       handleBack();
     }
   };
-
-  // Reusable Back Button component
-  // const BackButton = () => (
-  //   <Button
-  //     onClick={handleBackWithConfirmation}
-  //     variant="ghost"
-  //     className="absolute top-4 left-4 flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-  //   >
-  //     <svg
-  //       xmlns="http://www.w3.org/2000/svg"
-  //       className="h-5 w-5"
-  //       viewBox="0 0 20 20"
-  //       fill="currentColor"
-  //     >
-  //       <path
-  //         fillRule="evenodd"
-  //         d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-  //         clipRule="evenodd"
-  //       />
-  //     </svg>
-  //     <span>Back</span>
-  //   </Button>
-  // );
-
-  // Confirmation Dialog for going back
   const BackConfirmationDialog = () => (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-sm w-full mx-4">
@@ -344,63 +301,75 @@ export default function Home() {
             exit={{ opacity: 0, y: -20 }}
             className="relative h-full flex flex-col items-center justify-center px-6"
           >
-            {/* <BackButton /> */}
             <div className="max-w-md sm:max-w-lg md:max-w-xl w-full space-y-8 text-center">
               <h1 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-                Ready to Rizz? ✨
+                {loading ? "Generating Responses... ⚡" : "Ready to Rizz? ✨"}
               </h1>
-              <div className="bg-card text-card-foreground rounded-xl shadow-lg p-6 space-y-4">
-                {/* Display chosen input */}
-                <div className="space-y-2">
-                  <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-300">
-                    Your Input
-                  </h2>
-                  {inputMethod === "text" ? (
-                    <p className="px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-md text-sm text-gray-600 dark:text-gray-300">
-                      {`"${textInputValue}"`}
-                    </p>
-                  ) : (
-                    <p className="px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-md text-sm text-gray-600 dark:text-gray-300">
-                      ✅ Image uploaded:{" "}
-                      {imageInput?.name || "No file selected"}
-                    </p>
-                  )}
-                </div>
-                {/* Selected Context */}
-                <div className="space-y-2">
-                  <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-300">
-                    Context
-                  </h2>
-                  <p className="px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-md text-sm text-gray-600 dark:text-gray-300">
-                    {selectedContext}
+              {loading ? (
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                  <p className="text-muted-foreground">
+                    Crafting the perfect responses...
                   </p>
                 </div>
-                {/* Conversation Stage */}
-                <div className="space-y-2">
-                  <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-300">
-                    Stage
-                  </h2>
-                  <p className="px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-md text-sm text-gray-600 dark:text-gray-300 capitalize">
-                    {conversationStage}
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-between space-x-4 mt-6">
-                <Button
-                  onClick={() => setCurrentStep(3)}
-                  variant="outline"
-                  className="flex-1 sm:flex-initial"
-                >
-                  Back
-                </Button>
-                <Button
-                  onClick={handleGenerateResponses}
-                  variant="default"
-                  className="flex-1 sm:flex-initial"
-                >
-                  {loading ? "Generating..." : "Generate Responses →"}
-                </Button>
-              </div>
+              ) : (
+                <>
+                  <div className="bg-card text-card-foreground rounded-xl shadow-lg p-6 space-y-4">
+                    {/* Display chosen input */}
+                    <div className="space-y-2">
+                      <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-300">
+                        Your Input
+                      </h2>
+                      {inputMethod === "text" ? (
+                        <p className="px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-md text-sm text-gray-600 dark:text-gray-300">
+                          {`"${textInputValue}"`}
+                        </p>
+                      ) : (
+                        <p className="px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-md text-sm text-gray-600 dark:text-gray-300">
+                          ✅ Image uploaded:{" "}
+                          {imageInput?.name || "No file selected"}
+                        </p>
+                      )}
+                    </div>
+                    {/* Selected Context */}
+                    <div className="space-y-2">
+                      <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-300">
+                        Context
+                      </h2>
+                      <p className="px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-md text-sm text-gray-600 dark:text-gray-300">
+                        {selectedContext}
+                      </p>
+                    </div>
+                    {/* Conversation Stage */}
+                    <div className="space-y-2">
+                      <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-300">
+                        Stage
+                      </h2>
+                      <p className="px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-md text-sm text-gray-600 dark:text-gray-300 capitalize">
+                        {conversationStage}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex justify-between space-x-4 mt-6">
+                    <Button
+                      onClick={() => setCurrentStep(3)}
+                      variant="outline"
+                      className="flex-1 sm:flex-initial"
+                      disabled={loading}
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      onClick={handleGenerateResponses}
+                      variant="default"
+                      className="flex-1 sm:flex-initial"
+                      disabled={loading}
+                    >
+                      Generate Responses →
+                    </Button>
+                  </div>
+                </>
+              )}
             </div>
           </motion.div>
         )}
@@ -414,7 +383,6 @@ export default function Home() {
             exit={{ opacity: 0, y: -20 }}
             className="relative min-h-screen flex flex-col bg-background pt-20 pb-4 px-4"
           >
-            {/* <BackButton /> */}
             <div className="max-w-md md:max-w-4xl mx-auto w-full">
               <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -431,24 +399,21 @@ export default function Home() {
                   {error}
                 </div>
               ) : (
-                <div className="relative">
-                  <div className="overflow-hidden" ref={carouselRef}>
-                    <div className="flex touch-pan-y">
-                      {responses.map((response, index) => (
-                        <div
-                          key={response.id}
-                          className="flex-[0_0_100%] min-w-0 relative px-4"
-                        >
-                          <ResponseCard
-                            {...response}
-                            index={index}
-                            total={responses.length}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <Carousel className="w-full max-w-4xl mx-auto">
+                  <CarouselContent>
+                    {responses.map((response, index) => (
+                      <CarouselItem key={response.id}>
+                        <ResponseCard
+                          {...response}
+                          index={index}
+                          total={responses.length}
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
               )}
 
               <div className="mt-8 flex justify-center space-x-4">
