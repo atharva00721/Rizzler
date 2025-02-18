@@ -15,7 +15,6 @@ import {
   type Response,
   type InputMethod,
   type ConversationStage,
-  type Context,
 } from "@/types";
 
 // Reusable TextInput (if needed by TextInputStep)
