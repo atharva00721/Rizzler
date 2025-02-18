@@ -15,6 +15,7 @@ import {
   type Response,
   type InputMethod,
   type ConversationStage,
+  type Context,
 } from "@/types";
 
 // Reusable TextInput (if needed by TextInputStep)
@@ -98,12 +99,8 @@ export default function Home() {
       const data: Response[] = await res.json();
       setResponses(data);
       setCurrentStep(5); // Move to results step.
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("An unexpected error occurred");
-      }
+    } catch (err: any) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -355,6 +352,9 @@ export default function Home() {
               </h1>
               <div className="bg-card text-card-foreground rounded-xl shadow-lg p-6 space-y-4">
                 {/* Display chosen input */}
+                <div className="space-y-2">
+                  <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-300">
+                    Your Input
                   </h2>
                   {inputMethod === "text" ? (
                     <p className="px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-md text-sm text-gray-600 dark:text-gray-300">
