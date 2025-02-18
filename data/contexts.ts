@@ -22,4 +22,25 @@ export const predefinedContexts: Context[] = [
     emoji: "🌙",
     vibe: "freaky",
   },
+  {
+    id: 4,
+    label: "Toxic Hours",
+    description: "When you're feeling chaotic and dangerous",
+    emoji: "😈",
+    vibe: "toxic",
+  },
+  {
+    id: 5,
+    label: "Sweet Talk",
+    description: "Pure wholesome energy only",
+    emoji: "🥰",
+    vibe: "sweet",
+  },
+  {
+    id: 6,
+    label: "Witty Banter",
+    description: "Keep it clever and entertaining",
+    emoji: "🎭",
+    vibe: "witty",
+  },
 ];

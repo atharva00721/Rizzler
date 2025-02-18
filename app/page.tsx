@@ -16,6 +16,8 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import { ContextStep } from "@/components/steps/ContextStep";
+import { relationshipStages } from "@/data/stages";
+import { StageStep } from "@/components/steps/StageStep";
 import {
   type Response,
   type InputMethod,
@@ -30,13 +32,18 @@ export default function Home() {
   const [imageInput, setImageInput] = useState<File | null>(null);
   const [selectedContext, setSelectedContext] = useState("");
   const [conversationStage, setConversationStage] =
-    useState<ConversationStage>("early");
+    useState<ConversationStage>("just_met");
   const [responses, setResponses] = useState<Response[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [customContext, setCustomContext] = useState("");
   const [isCustomContext, setIsCustomContext] = useState(false);
   const [showBackConfirmation, setShowBackConfirmation] = useState(false);
+
+  // Add this sorting function at the top with other state declarations
+  const sortResponsesByRating = (responses: Response[]) => {
+    return [...responses].sort((a, b) => b.rating - a.rating);
+  };
 
   // Handle file input on step 1
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +73,11 @@ export default function Home() {
       "context",
       isCustomContext ? customContext : selectedContext
     );
+    const selectedStage = relationshipStages.find(
+      (s) => s.id === conversationStage
+    );
     formData.append("stage", conversationStage);
+    formData.append("stageContext", selectedStage?.promptHint || "");
 
     try {
       const res = await fetch("/api/analyze", {
@@ -92,7 +103,7 @@ export default function Home() {
     setTextInputValue("");
     setImageInput(null);
     setSelectedContext("");
-    setConversationStage("early");
+    setConversationStage("acquaintance");
     setResponses([]);
     setError("");
     setCustomContext("");
@@ -244,51 +255,14 @@ export default function Home() {
             exit={{ opacity: 0, y: -20 }}
             className="relative h-full flex flex-col items-center justify-center px-4"
           >
-            {/* <BackButton /> */}
-            <div className="max-w-md sm:max-w-lg md:max-w-xl w-full space-y-8 text-center">
-              <h1 className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
-                Where are you in the conversation?
-              </h1>
-              <div className="space-y-4">
-                {["early", "mid", "closing"].map((stage) => (
-                  <div
-                    key={stage}
-                    onClick={() => {
-                      setConversationStage(stage as ConversationStage);
-                      setCurrentStep(4);
-                    }}
-                    className={`p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all cursor-pointer ${
-                      conversationStage === stage
-                        ? "border-2 border-purple-500"
-                        : ""
-                    }`}
-                  >
-                    <h3 className="text-xl font-semibold">
-                      {stage === "early" && "Just Starting 🌱"}
-                      {stage === "mid" && "In Progress 🔄"}
-                      {stage === "closing" && "Finalizing 🎯"}
-                    </h3>
-                  </div>
-                ))}
-              </div>
-              <div className="flex justify-between space-x-4 mt-6">
-                <Button
-                  onClick={() => setCurrentStep(2)}
-                  variant="outline"
-                  className="flex-1 sm:flex-initial"
-                >
-                  Back
-                </Button>
-                <Button
-                  onClick={() => setCurrentStep(4)}
-                  variant="default"
-                  className="flex-1 sm:flex-initial"
-                  disabled={!conversationStage}
-                >
-                  Continue →
-                </Button>
-              </div>
-            </div>
+            <StageStep
+              selectedStage={conversationStage}
+              onSelect={(stageId) => {
+                setConversationStage(stageId);
+              }}
+              onBack={() => setCurrentStep(2)}
+              onContinue={() => setCurrentStep(4)}
+            />
           </motion.div>
         )}
 
@@ -346,7 +320,9 @@ export default function Home() {
                         Stage
                       </h2>
                       <p className="px-4 py-2 bg-gray-50 dark:bg-gray-700 rounded-md text-sm text-gray-600 dark:text-gray-300 capitalize">
-                        {conversationStage}
+                        {relationshipStages.find(
+                          (s) => s.id === conversationStage
+                        )?.label || conversationStage}
                       </p>
                     </div>
                   </div>
@@ -383,11 +359,14 @@ export default function Home() {
             exit={{ opacity: 0, y: -20 }}
             className="relative min-h-screen flex flex-col bg-background pt-20 pb-4 px-4"
           >
-            <div className="max-w-md md:max-w-4xl mx-auto w-full">
+            <div className="max-w-md md:max-w-4xl mx-auto w-full pt-20">
               <div className="text-center mb-8">
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+                <h1 className=" text-3xl md:text-4xl font-bold text-foreground">
                   Your Responses 🎯
                 </h1>
+                <p className="text-muted-foreground mt-2">
+                  Sorted by effectiveness rating
+                </p>
               </div>
 
               {loading ? (
@@ -401,7 +380,7 @@ export default function Home() {
               ) : (
                 <Carousel className="w-full max-w-4xl mx-auto">
                   <CarouselContent>
-                    {responses.map((response, index) => (
+                    {sortResponsesByRating(responses).map((response, index) => (
                       <CarouselItem key={response.id}>
                         <ResponseCard
                           {...response}

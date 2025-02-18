@@ -1,8 +1,26 @@
 export type InputMethod = "text" | "image";
 
-export type ConversationStage = "early" | "mid" | "closing";
+export interface RelationshipStage {
+  id: ConversationStage;
+  label: string;
+  emoji: string;
+  desc: string;
+  promptHint: string;
+}
 
-export type Vibe = "flirty" | "simp" | "freaky";
+export type ConversationStage =
+  | "just_met"
+  | "acquaintance"
+  | "friends"
+  | "close_friends"
+  | "dating"
+  | "best_friends"
+  | "dating"
+  | "long_term_relationship"
+  | "its_complicated"
+  | "crush";
+
+export type Vibe = "flirty" | "simp" | "freaky" | "sweet" | "toxic" | "witty";
 
 export interface Response {
   id: number;
