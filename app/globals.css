@@ -2,20 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 340 100% 98%;
+    /* Soft Pink Background */
+    --foreground: 340 60% 10%;
+    /* Darker Pink Foreground for Readability */
+    --muted: 340 60% 90%;
+    /* Light Pink Muted Elements */
+    --muted-foreground: 340 25% 35%;
+    /* Muted Foreground */
+    --popover: 340 100% 98%;
+    --popover-foreground: 340 60% 10%;
+    --card: 340 65% 96%;
+    /* Softer Card Background */
+    --card-foreground: 340 60% 12%;
+    --border: 340 30% 85%;
+    /* Soft Border */
+    --input: 340 30% 85%;
+    --primary: 340 100% 85%;
+    /* Bright Pink for Action Elements */
+    --primary-foreground: 340 100% 20%;
+    /* Deep Pink Text */
+    --secondary: 315 100% 90%;
+    /* Warm Peachy Pink */
+    --secondary-foreground: 315 100% 25%;
+    --accent: 280 100% 85%;
+    /* Lavender Accent for a Playful Touch */
+    --accent-foreground: 280 100% 30%;
+    --destructive: 0 85% 50%;
+    /* Red for Errors */
+    --destructive-foreground: 0 0% 100%;
+    --ring: 340 100% 85%;
+    --chart-1: 340 100% 85%;
+    --chart-2: 315 100% 90%;
+    --chart-3: 280 100% 85%;
+    --chart-4: 345 100% 88%;
+    --chart-5: 350 100% 84%;
+    --radius: 0.75rem;
+    /* Softer Rounded Corners */
+  }
+
+  .dark {
+    --background: 340 30% 10%;
+    /* Darker Pinkish Background */
+    --foreground: 340 40% 95%;
+    --muted: 340 25% 18%;
+    --muted-foreground: 340 15% 60%;
+    --popover: 340 30% 10%;
+    --popover-foreground: 340 40% 95%;
+    --card: 340 25% 12%;
+    --card-foreground: 340 40% 95%;
+    --border: 340 20% 22%;
+    --input: 340 20% 22%;
+    --primary: 340 100% 70%;
+    --primary-foreground: 340 100% 15%;
+    --secondary: 315 80% 75%;
+    --secondary-foreground: 315 100% 20%;
+    --accent: 280 80% 75%;
+    --accent-foreground: 280 100% 30%;
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 0%;
+    --ring: 340 100% 70%;
+    --chart-1: 340 100% 75%;
+    --chart-2: 315 100% 78%;
+    --chart-3: 280 100% 76%;
+    --chart-4: 345 100% 74%;
+    --chart-5: 350 100% 72%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }
