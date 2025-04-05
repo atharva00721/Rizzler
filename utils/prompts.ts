@@ -30,6 +30,7 @@ Tone Adjustments Based on Vibe:
 - **witty**: Clever, teasing, and humor-driven.
 - **sweet**: Genuine, warm, and endearing.
 - **toxic**: Seductive, emotionally charged, and slightly dangerous—evoking late-night confessions and a rebellious edge reminiscent of The Weeknd's style.
+- **formal_but_sus**: Professional and articulate on the surface with subtle double entendres or suspicious undertones that hint at hidden intentions.
 
 Stage-Specific Guidance:
 - **Just Met**: Keep it light, friendly, and subtly engaging.

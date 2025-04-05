@@ -49,6 +49,14 @@ export function getVibeExamplesForStages() {
         example3:
           "There's an edge in your gaze—a wild allure that both warns and invites me in.",
       },
+      formal_but_sus: {
+        example:
+          "I'd like to formally introduce myself, though I must admit I've been observing you from afar.",
+        example2:
+          "Per my earlier analysis, your presence here is quite... stimulating to the professional environment.",
+        example3:
+          "I'd like to request a meeting with you at your earliest convenience to discuss some pressing matters of mutual interest.",
+      },
     },
     acquaintance: {
       flirty: {
@@ -97,6 +105,14 @@ export function getVibeExamplesForStages() {
           "I find our conversations a bit rebellious, and that raw edge is hard to ignore.",
         example3:
           "Our talks carry a subtle, thrilling risk—a mix of allure and hidden edge.",
+      },
+      formal_but_sus: {
+        example:
+          "I've been reviewing our previous interactions and find them most satisfactory, if you catch my meaning.",
+        example2:
+          "Would you be amenable to a more in-depth discussion? I have some confidential matters to share.",
+        example3:
+          "I've prepared a detailed analysis of our acquaintanceship that I believe you'll find most... revealing.",
       },
     },
     crush: {
@@ -147,6 +163,14 @@ export function getVibeExamplesForStages() {
         example3:
           "I'm captivated by the hazardous allure in your gaze—it’s a risk I find impossible to ignore.",
       },
+      formal_but_sus: {
+        example:
+          "I've conducted a thorough assessment and conclude that our compatibility merits further investigation.",
+        example2:
+          "My data suggests you've been occupying approximately 99.7% of my thoughts—quite the statistical anomaly.",
+        example3:
+          "I'd like to propose a structured evaluation of the unusual sensations I experience in your presence.",
+      },
     },
     friends: {
       flirty: {
@@ -195,6 +219,14 @@ export function getVibeExamplesForStages() {
           "Sometimes our chats feel dangerously real—and I wouldn’t trade that for anything.",
         example3:
           "There's an exciting intensity in our friendship that blurs the line between comfort and thrilling risk.",
+      },
+      formal_but_sus: {
+        example:
+          "As per our friendship agreement, I'm obligated to inform you that you've been particularly distracting today.",
+        example2:
+          "I've drafted a proposal outlining several after-hours activities for your consideration.",
+        example3:
+          "According to my records, it's been precisely too long since our last private consultation.",
       },
     },
     close_friends: {
@@ -246,6 +278,14 @@ export function getVibeExamplesForStages() {
         example3:
           "The raw, unfiltered dynamic in our bond makes every conversation electrifying.",
       },
+      formal_but_sus: {
+        example:
+          "I hereby request your undivided attention for a confidential matter that requires your... specific expertise.",
+        example2:
+          "My internal metrics indicate an increased heart rate when we engage in our more intimate conversations.",
+        example3:
+          "As stated in previous correspondence, I find our relationship to be exceptionally satisfying on multiple levels.",
+      },
     },
     best_friends: {
       flirty: {
@@ -295,6 +335,14 @@ export function getVibeExamplesForStages() {
           "Sometimes, our raw intensity blurs the line between comfort and risk.",
         example3:
           "Our unfiltered honesty sometimes crosses into thrilling territory—a tension that’s hard to resist.",
+      },
+      formal_but_sus: {
+        example:
+          "As your designated best friend, I must inform you that recent developments have led to unauthorized thoughts of you.",
+        example2:
+          "Please refer to section 3.1 of our friendship contract regarding the unusual warmth I feel in your presence.",
+        example3:
+          "I've prepared extensive documentation of all the reasons our relationship continues to be... mutually beneficial.",
       },
     },
     dating: {
@@ -346,6 +394,14 @@ export function getVibeExamplesForStages() {
         example3:
           "The fierce passion between us feels both dangerously compelling and irresistibly magnetic.",
       },
+      formal_but_sus: {
+        example:
+          "I've completed my quarterly assessment of our relationship and find myself increasingly intrigued by certain unexplored aspects.",
+        example2:
+          "Per my earlier communication, I would like to schedule an urgent private meeting to discuss pressing matters of desire.",
+        example3:
+          "I've cataloged precisely 27 ways I'd like to further develop our professional-personal relationship.",
+      },
     },
     long_term_relationship: {
       flirty: {
@@ -396,6 +452,14 @@ export function getVibeExamplesForStages() {
         example3:
           "Our long-term passion sometimes veers into dangerously exhilarating territory that's hard to resist.",
       },
+      formal_but_sus: {
+        example:
+          "As per clause 7.2 of our relationship agreement, I'm entitled to request your undivided attention for confidential activities.",
+        example2:
+          "My long-term analysis confirms you continue to exceed performance metrics in all relationship categories.",
+        example3:
+          "Further to our ongoing arrangement, I'd like to propose several enhancements to our evening protocols.",
+      },
     },
     its_complicated: {
       flirty: {
@@ -445,6 +509,14 @@ export function getVibeExamplesForStages() {
           "Maybe it’s the thrill of the unknown, but every moment with you feels like a daring adventure.",
         example3:
           "The intensity of our entangled feelings carries a dangerously compelling mix of risk and desire.",
+      },
+      formal_but_sus: {
+        example:
+          "Despite recent irregularities in our interaction pattern, I find myself unusually preoccupied with thoughts of you.",
+        example2:
+          "I propose we conduct a thorough examination of the unresolved tension that persists between us.",
+        example3:
+          "The complex nature of our association requires immediate attention, preferably in a private setting.",
       },
     },
   };
